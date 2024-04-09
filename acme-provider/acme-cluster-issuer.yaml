@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: idm-staging
+spec:
+  acme:
+    skipTLSVerify: true
+    preferredChain: ""
+    privateKeySecretRef:
+      name: idm-secret
+    server: https://idm.cotton.blue:8443/acme/directory
+    solvers:
+    - http01:
+        ingress:
+          class: openshift-default

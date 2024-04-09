@@ -1,0 +1,37 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: GroupSync
+metadata:
+  name: ldap-groupsync
+  namespace: group-sync-operator
+spec:
+  providers:
+  - ldap:
+      credentialsSecret:
+        kind: Secret
+        name: idm-ldap
+        namespace: group-sync-operator
+      insecure: true
+      rfc2307:
+        groupMembershipAttributes:
+        - member
+        groupNameAttributes:
+        - cn
+        groupUIDAttribute: dn
+        groupsQuery:
+          baseDN: cn=groups,cn=accounts,dc=cotton,dc=blue
+          derefAliases: never
+          filter: (objectClass=groupofnames)
+          scope: sub
+        tolerateMemberNotFoundErrors: true
+        tolerateMemberOutOfScopeErrors: true
+        userNameAttributes:
+        - uid
+        userUIDAttribute: dn
+        usersQuery:
+          baseDN: cn=users,cn=accounts,dc=cotton,dc=blue
+          derefAliases: never
+          scope: sub
+      url: ldap://idm.cotton.blue
+      whitelist:
+      - cn=admins,cn=groups,cn=accounts,dc=cotton,dc=blue
+    name: ldap

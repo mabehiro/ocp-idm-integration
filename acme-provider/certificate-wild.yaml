@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: sno3-cert-mgr
+  namespace: openshift-ingress
+spec:
+  isCA: false
+  commonName: "apps.sno3.cotton.blue"
+  secretName: sno3-cert-mgr-secret
+  dnsNames:
+  - "*.apps.sno3.cotton.blue"
+  - "apps.sno3.cotton.blue"
+  issuerRef:
+    name: idm-staging
+    kind: ClusterIssuer
